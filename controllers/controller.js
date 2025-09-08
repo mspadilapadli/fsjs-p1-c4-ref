@@ -36,5 +36,17 @@ class Controller {
             // console.log(error);
         }
     }
+    static async showSongById(req, res) {
+        try {
+            let { id } = req.params;
+            let data = await Model.getSongById(+id);
+            // res.send(data);
+            let dataLabels = await Model.getLabelsdata();
+            res.render("songDetail", { data, dataLabels });
+        } catch (error) {
+            res.send(error);
+            // console.log(error);
+        }
+    }
 }
 module.exports = Controller;
