@@ -62,5 +62,14 @@ class Controller {
             // console.log(error);
         }
     }
+    static async getDeleteSong(req, res) {
+        try {
+            let { id } = req.params;
+            await Model.deleteSong(+id);
+            res.redirect("/songs");
+        } catch (error) {
+            res.send(error);
+        }
+    }
 }
 module.exports = Controller;
