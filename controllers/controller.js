@@ -13,5 +13,15 @@ class Controller {
             // console.log(error);
         }
     }
+    static async showLabelDetail(req, res) {
+        try {
+            let data = await Model.getLabelDetail();
+            res.render("labelsDetail", { data });
+            // res.send(data);
+        } catch (error) {
+            res.send(error);
+            // console.log(error);
+        }
+    }
 }
 module.exports = Controller;
