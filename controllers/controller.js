@@ -48,5 +48,19 @@ class Controller {
             // console.log(error);
         }
     }
+    static async showFormAddSong(req, res) {
+        try {
+            // res.send("ubah ke controller");
+            // console.log(req.query);
+            let { error } = req.query;
+            // console.log(error);
+            let dataLabels = await Model.getLabelsdata();
+            res.render("formAddSong", { dataLabels, error });
+            // res.send(data);
+        } catch (error) {
+            res.send(error);
+            // console.log(error);
+        }
+    }
 }
 module.exports = Controller;
