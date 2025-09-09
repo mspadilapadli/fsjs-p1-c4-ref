@@ -1,21 +1,12 @@
-const { config } = require("process");
-const pool = require("./connection");
+const pool = require("./config");
 
-let dataLabels = require("./data/labels.json")
-    .map((perLabel) => {
-        let { name, since, city } = perLabel;
-        return `('${name}','${since}', '${city}')`;
-    })
+const dataLabels = require("./data/labels.json")
+    .map(({ name, since, city }) => `('${name}','${since}','${city}')`)
     .join(",\n");
 
-// console.log(dataLabels);
-
-let insertLabels = `insert into "Labels" ("name","since","city")
-values ${dataLabels}`;
-
-let dataSongs = require("./data/songs.json")
-    .map((perSong) => {
-        let {
+const dataSongs = require("./data/songs.json")
+    .map(
+        ({
             title,
             bandName,
             duration,
@@ -25,13 +16,13 @@ let dataSongs = require("./data/songs.json")
             imageUrl,
             totalVote,
             LabelId,
-        } = perSong;
-        return `('${title}', '${bandName}', ${duration}, '${genre}','${createdDate}','${lyric}','${imageUrl}',${totalVote},${LabelId})`;
-    })
+        }) =>
+            `('${title}', '${bandName}', ${duration}, '${genre}','${createdDate}','${lyric}','${imageUrl}',${totalVote},${LabelId})`
+    )
     .join(",\n");
 
-// console.log(dataSongs);
-let insertSongs = `insert into "Songs"("title",
+const qSeedingLabels = `insert into "Labels" ("name","since","city") values ${dataLabels}`;
+const qSeedingSongs = `insert into "Songs"("title",
             "bandName",
             "duration",
             "genre",
@@ -39,19 +30,19 @@ let insertSongs = `insert into "Songs"("title",
             "lyric",
             "imageUrl",
             "totalVote",
-            "LabelId") 
+            "labelId") 
             values ${dataSongs}`;
-// console.log(insertSongs);
-async function seeding() {
-    try {
-        let queryLabels = await pool.query(insertLabels);
-        if (queryLabels) console.log(`insert data labels success`);
 
-        let querySongs = await pool.query(insertSongs);
-        if (querySongs) console.log(`insert data songs success`);
+const seeding = async () => {
+    try {
+        const seedLabels = await pool.query(qSeedingLabels);
+        if (seedLabels) console.log("seeding Labels successfully");
+
+        const seedSong = await pool.query(qSeedingSongs);
+        if (seedSong) console.log("seeding Songs successfully");
     } catch (error) {
         console.log(error);
     }
-}
+};
 
 seeding();
