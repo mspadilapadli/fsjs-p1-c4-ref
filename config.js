@@ -8,14 +8,14 @@ const pool = new Pool({
     database: "song-label-ref",
 });
 
-const test = async () => {
-    try {
-        console.log(await pool.query("select now()"));
-    } catch (error) {
-        console.log(error);
-    }
-};
+// const test = async () => {
+//     try {
+//         console.log(await pool.query("select now()"));
+//     } catch (error) {
+//         console.log(error);
+//     }
+// };
 
-test();
+// test();
 
 module.exports = pool;
