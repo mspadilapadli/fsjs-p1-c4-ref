@@ -1,14 +1,16 @@
 const Model = require("../models/model");
-const View = require("../views/view");
+// const View = require("../views");
 
 class Controller {
     //* ==Labels==
     static async showLabels(req, res) {
         try {
-            const data = await Model.getLables();
-            res.send(data);
+            let data = await Model.getLables();
+            res.render("labels", { data });
+            // res.send(data);
         } catch (error) {
-            console.log(error);
+            res.send(error);
+            // console.log(error);
         }
     }
 
