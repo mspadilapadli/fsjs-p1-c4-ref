@@ -11,6 +11,16 @@ class Model {
             throw error;
         }
     }
+
+    static async getSongs(req, res) {
+        try {
+            const query = `select * from "Songs" `;
+            const data = await pool.query(query);
+            return Factory.instanceSongs(data.rows);
+        } catch (error) {
+            throw error;
+        }
+    }
 }
 
 module.exports = Model;

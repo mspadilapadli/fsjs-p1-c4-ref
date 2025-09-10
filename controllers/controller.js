@@ -7,7 +7,15 @@ class Controller {
         try {
             const data = await Model.getLables();
             res.send(data);
-            console.log(data);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    static async showSongs(req, res) {
+        try {
+            const data = await Model.getSongs();
+            res.send(data);
         } catch (error) {
             console.log(error);
         }

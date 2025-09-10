@@ -54,7 +54,7 @@ class Factory {
                 totalVote,
                 lableId,
             }) =>
-                this.createSong(
+                this.instanceSong(
                     id,
                     title,
                     bandName,
@@ -73,7 +73,7 @@ class Factory {
         return new Label(id, name, since, city);
     }
 
-    static instranceSong(
+    static instanceSong(
         id,
         title,
         bandName,
