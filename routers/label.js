@@ -1,8 +1,7 @@
 const express = require("express");
 const router = express.Router();
+const Controller = require("../controllers/controller");
 
-router.get("/", (req, res) => {
-    res.send("this is from labels routers");
-});
+router.get("/", Controller.showLabels);
 
 module.exports = router;
