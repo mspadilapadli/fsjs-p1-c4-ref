@@ -5,7 +5,7 @@ class Model {
         try {
             const query = `select * from "Labels" order by "name" asc`;
             const data = await pool.query(query);
-
+            console.log(Factory.instanceLabels(data.rows));
             return Factory.instanceLabels(data.rows);
         } catch (error) {
             throw error;

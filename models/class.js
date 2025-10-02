@@ -7,6 +7,17 @@ class Label {
         this.since = since;
         this.city = city;
     }
+
+    get formatDate() {
+        const date = new Date(this.since);
+        const options = {
+            weekday: "long",
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+        };
+        return date.toLocaleDateString("id-ID", options);
+    }
 }
 
 class LabelDetailDuration extends Label {
