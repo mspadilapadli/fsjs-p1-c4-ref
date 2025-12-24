@@ -141,3 +141,17 @@ class Factory {
 }
 
 module.exports = Factory;
+
+//test
+// const labelData = require("../data/labels.json");
+// console.log(Factory.instanceLabels(labelData));
+// const test = async () => {
+//     try {
+//         console.log(Factory.instanceLabels(require("../data/labels.json")));
+//         console.log(Factory.instanceSongDetails(require("../data/songs.json")));
+//     } catch (error) {
+//         console.log(error);
+//     }
+// };
+
+// test();
