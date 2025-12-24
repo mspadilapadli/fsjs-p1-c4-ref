@@ -14,6 +14,14 @@ class Controller {
         }
     }
 
+    static async showLabelDetail(req, res) {
+        try {
+            res.send({ data: "test label detail" });
+        } catch (error) {
+            res.send(error);
+        }
+    }
+
     static async showSongs(req, res) {
         try {
             const data = await Model.getSongs();
