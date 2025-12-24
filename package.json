@@ -3,5 +3,12 @@
         "ejs": "^3.1.10",
         "express": "^5.1.0",
         "pg": "^8.16.3"
+    },
+    "scripts": {
+        "start": "npx nodemon app.js",
+        "dev": "node --watch app.js"
+    },
+    "devDependencies": {
+        "nodemon": "^3.1.11"
     }
 }
