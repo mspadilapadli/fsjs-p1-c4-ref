@@ -110,7 +110,7 @@ class Factory {
                 new Song(id, title, bandName, duration, genre, totalVote)
         );
     }
-    static instanceSongDetails(arr) {
+    static instanceSongsDetail(arr) {
         return arr.map(
             ({
                 id,
@@ -122,7 +122,7 @@ class Factory {
                 lyric,
                 imageUrl,
                 totalVote,
-                lableId,
+                labelId,
             }) =>
                 new SongDetail(
                     id,
@@ -134,8 +134,33 @@ class Factory {
                     lyric,
                     imageUrl,
                     totalVote,
-                    lableId
+                    labelId
                 )
+        );
+    }
+    static instanceSongDetail({
+        id,
+        title,
+        bandName,
+        duration,
+        genre,
+        createdDate,
+        lyric,
+        imageUrl,
+        totalVote,
+        labelId,
+    }) {
+        return new SongDetail(
+            id,
+            title,
+            bandName,
+            duration,
+            genre,
+            createdDate,
+            lyric,
+            imageUrl,
+            totalVote,
+            labelId
         );
     }
 }
