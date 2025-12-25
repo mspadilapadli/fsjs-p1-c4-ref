@@ -7,10 +7,8 @@ class Controller {
         try {
             let data = await Model.getLables();
             res.render("labels", { data });
-            // res.send(data);
         } catch (error) {
             res.send(error);
-            // console.log(error);
         }
     }
 
@@ -29,6 +27,16 @@ class Controller {
             res.render("songs", { data });
         } catch (error) {
             console.log(error);
+        }
+    }
+
+    static async showSongById(req, res) {
+        try {
+            const { id } = req.params;
+            const data = await Model.getSongById(id);
+            res.render("songDetail", { data });
+        } catch (error) {
+            res.send(error);
         }
     }
 }

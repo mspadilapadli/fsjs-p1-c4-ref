@@ -19,6 +19,6 @@ router.get("/", Controller.showSongs);
 // router.get("/:id/vote", Controller.vote);
 
 // //show single song
-// router.get("/:id", Controller.showSongById);
+router.get("/:id", Controller.showSongById);
 
 module.exports = router;
