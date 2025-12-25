@@ -9,6 +9,9 @@ app.set("view engine", "ejs");
 //use router
 app.use("/", require("./routers/index"));
 
+//get data from htlm
+app.use(express.urlencoded({ extended: true }));
+
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
 });
