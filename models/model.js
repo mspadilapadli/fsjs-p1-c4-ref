@@ -5,7 +5,6 @@ class Model {
         try {
             const query = `select * from "Labels" order by "name" asc`;
             const data = await pool.query(query);
-            // console.log(Factory.instanceLabels(data.rows));
             return Factory.instanceLabels(data.rows);
         } catch (error) {
             throw error;
@@ -24,7 +23,6 @@ GROUP BY l.id, l.name, l.city , l.since
 ORDER BY l.name ASC`;
 
             const data = await pool.query(query);
-            console.log(data.rows);
             const instanceData = Factory.instanceLabelDetailDuration(data.rows);
             return instanceData;
         } catch (error) {

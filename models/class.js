@@ -106,8 +106,8 @@ class Factory {
 
     static instanceSongs(arr) {
         return arr.map(
-            ({ id, title, bandName, genre, totalVote }) =>
-                new Song(id, title, bandName, genre, totalVote)
+            ({ id, title, bandName, duration, genre, totalVote }) =>
+                new Song(id, title, bandName, duration, genre, totalVote)
         );
     }
     static instanceSongDetails(arr) {

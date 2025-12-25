@@ -11,7 +11,7 @@
 
 <body>
    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <a class="navbar-brand" href="#">Navbar</a>
+      <a class="navbar-brand" href="#">Songs</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
          <span class="navbar-toggler-icon"></span>
@@ -48,32 +48,42 @@
       </div>
    </nav>
 
-   <a class="btn btn-outline-success" href="labels/detail">Detail Duration</a>
+
    <table class="table  table-striped">
       <thead>
-         <tr>
-            <th scope="col">id</th>
-            <th scope="col">Name</th>
-            <th scope="col">Since</th>
-            <th scope="col">City</th>
+         <tr class="table-info">
+            <th scope="col">Title</th>
+            <th scope="col">Band Name</th>
+            <th scope="col">Duration</th>
+            <th scope="col">Genre</th>
+            <th scope="col">Total Vote</th>
+            <th scope="col">Action</th>
          </tr>
       </thead>
       <tbody>
 
-         <% data.forEach((label)=> {%>
+         <% data.forEach((song)=> {%>
 
             <tr>
                <th scope="row">
-                  <%=label.id%>
+                  <%=song.title%>
                </th>
                <td>
-                  <%= label.name %>
+                  <%= song.bandName %>
                </td>
                <td>
-                  <%= label.formatDate%>
+                  <%= song.duration%>
                </td>
                <td>
-                  <%= label.city %>
+                  <%= song.genre %>
+               </td>
+               <td>
+                  <%= song.totalVote %>
+               </td>
+               <td>
+                  <a href="Read Songs" class="btn btn-success">Read</a>
+                  <a href="Edit" class="btn btn-warning">Edit</a>
+                  <a href="Delete" class="btn btn-danger">Delete</a>
                </td>
             </tr>
             <% }); %>

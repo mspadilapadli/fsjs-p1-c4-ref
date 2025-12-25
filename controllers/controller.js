@@ -26,7 +26,7 @@ class Controller {
     static async showSongs(req, res) {
         try {
             const data = await Model.getSongs();
-            res.send(data);
+            res.render("songs", { data });
         } catch (error) {
             console.log(error);
         }
