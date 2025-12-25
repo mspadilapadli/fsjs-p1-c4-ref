@@ -2,8 +2,8 @@ const express = require("express");
 const router = express.Router();
 
 //*1
-const labelRouter = require("./label");
-router.use("/labels", labelRouter);
+// const labelRouter = require("./label");
+// router.use("/labels", labelRouter);
 
 //*2
 router.use("/labels", require("./label"));

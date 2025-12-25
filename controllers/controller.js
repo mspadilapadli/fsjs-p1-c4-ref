@@ -16,7 +16,8 @@ class Controller {
 
     static async showLabelDetail(req, res) {
         try {
-            res.send({ data: "test label detail" });
+            const data = await Model.getDetailLables();
+            res.render("labelDetails", { data });
         } catch (error) {
             res.send(error);
         }

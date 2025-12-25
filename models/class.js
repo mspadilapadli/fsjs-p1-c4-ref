@@ -86,18 +86,18 @@ class Factory {
                 name,
                 since,
                 city,
-                averageDuration,
-                minDuration,
-                maxDuration,
+                averageduration,
+                minduration,
+                maxduration,
             }) =>
                 new LabelDetailDuration(
                     id,
                     name,
                     since,
                     city,
-                    averageDuration,
-                    minDuration,
-                    maxDuration
+                    averageduration,
+                    minduration,
+                    maxduration
                 )
         );
     }
