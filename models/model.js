@@ -1,7 +1,7 @@
 const pool = require("../config");
 const Factory = require("./class");
 class Model {
-    static async getLables(req, res) {
+    static async getLables() {
         try {
             const query = `select * from "Labels" order by "name" asc`;
             const data = await pool.query(query);
@@ -11,7 +11,7 @@ class Model {
         }
     }
 
-    static async getDetailLables(req, res) {
+    static async getDetailLables() {
         try {
             const query = `SELECT l.id, l.name, l.city, l.since,
 COALESCE(CAST(AVG(s.duration) as float), 0) as averageduration,
@@ -30,11 +30,22 @@ ORDER BY l.name ASC`;
         }
     }
 
-    static async getSongs(req, res) {
+    static async getSongs() {
         try {
             const query = `select * from "Songs" `;
             const data = await pool.query(query);
             return Factory.instanceSongs(data.rows);
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    static async getSongById(id) {
+        try {
+            const query = `select * from "Songs" where "id" = ${+id}`;
+            const { rows } = await pool.query(query);
+            if (rows.length == 0) throw "Song not found";
+            return Factory.instanceSongDetail(rows[0]);
         } catch (error) {
             throw error;
         }
