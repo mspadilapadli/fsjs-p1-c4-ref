@@ -71,9 +71,21 @@ class Controller {
                 createdDate,
             };
             await Model.addSong(payload);
+            // pr : add notice add data success
             res.redirect("/songs");
         } catch (error) {
             res.send(error.message);
+        }
+    }
+
+    static async deteleSong(req, res) {
+        try {
+            const { id } = req.params;
+            await Model.deleteSong(+id);
+            // pr : add notice del data success
+            res.redirect("/songs");
+        } catch (error) {
+            res.send(error);
         }
     }
 }

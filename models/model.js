@@ -80,6 +80,16 @@ ORDER BY l.name ASC`;
             throw error;
         }
     }
+
+    static async deleteSong(id) {
+        try {
+            const song = this.getSongById(id);
+            let query = `delete from "Songs" where "id" = ${id}`;
+            await pool.query(query);
+        } catch (error) {
+            throw error;
+        }
+    }
 }
 
 module.exports = Model;

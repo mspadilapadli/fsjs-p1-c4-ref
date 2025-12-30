@@ -13,7 +13,7 @@ router.post("/add", Controller.postSong);
 // router.get("/:id/edit", Controller.showFormUpdateSong);
 
 // //delete
-// router.get("/:id/delete", Controller.deteleSong);
+router.get("/:id/delete", Controller.deteleSong);
 
 // // vote song
 // router.get("/:id/vote", Controller.vote);
