@@ -12,24 +12,45 @@
 <body>
    <div class="container">
       <form action="/songs/add" method="post">
+
          <div class="mb-3">
             <label>
                Title
             </label>
-            <input type="text" class="form-control" name="title" value="<%= old?.title || '' %>">
+            <input type="text" class="form-control <%= errors.title ? 'is-invalid' : '' %>" name="title"
+               value="<%= old?.title || '' %>">
+            <% if (errors.title) { %>
+               <small class="text-danger ms-2">
+                  <%= errors.title %>
+               </small>
+               <% } %>
          </div>
+
          <div class="mb-3">
             <label>Band Name</label>
-            <input type="text" class="form-control" name="bandName" value="<%= old?.bandName || '' %>">
+            <input type="text" class="form-control <%= errors.bandName ? 'is-invalid' : '' %>" name="bandName"
+               value="<%= old?.bandName || '' %>">
+            <% if (errors.bandName) { %>
+               <small class="text-danger ms-2">
+                  <%= errors.bandName %>
+               </small>
+               <% } %>
          </div>
+
          <div class=" mb-3">
             <label>Duration</label>
-            <input type="number" class="form-control" name="duration" placeholder="0"
-               value="<%= old?.duration ?? '' %>">
+            <input type="number" class="form-control <%= errors.duration ? 'is-invalid' : '' %>" name="duration"
+               placeholder="0" value="<%= old?.duration ?? '' %>">
+            <% if (errors.duration) { %>
+               <small class="text-danger ms-2">
+                  <%= errors.duration %>
+               </small>
+               <% } %>
          </div>
+
          <div class=" mb-3">
             <label>Genre</label>
-            <select class="form-control" name="genre">
+            <select class="form-control <%= errors.genre ? 'is-invalid' : '' %>" name="genre">
                <option value="">--Select--</option>
                <option value="Rock" <%=old?.genre=="Rock" ? "selected" :"" %> >Rock</option>
                <option value="Pop" <%=old?.genre=="Pop" ? "selected" :"" %>>Pop</option>
@@ -37,18 +58,39 @@
                <option value="Jazz" <%=old?.genre=="Jazz" ? "selected" :"" %>>Jazz</option>
                <option value="Other" <%=old?.genre=="Other" ? "selected" :"" %>>Other</option>
             </select>
+            <% if (errors.genre) { %>
+               <small class="text-danger ms-2">
+                  <%= errors.genre %>
+               </small>
+               <% } %>
          </div>
+
          <div class="mb-3">
             <label>Lyric</label>
-            <input type="text" class="form-control" name="lyric" value="<%= old?.lyric || '' %>">
+            <input type="text" class="form-control <%= errors.lyric ? 'is-invalid' : '' %>" name="lyric"
+               value="<%= old?.lyric || '' %>">
+            <% if (errors.lyric) { %>
+               <small class="text-danger ms-2">
+                  <%= errors.lyric %>
+               </small>
+               <% } %>
          </div>
+
          <div class=" mb-3">
             <label>Image Url</label>
-            <input type="text" class="form-control" name="imageUrl" value="<%= old?.imageUrl || '' %>">
+            <input type="text" class="form-control <%= errors.imageUrl ? 'is-invalid' : '' %>" name="imageUrl"
+               value="<%= old?.imageUrl || '' %>">
+            <% if (errors.imageUrl) { %>
+               <small class="text-danger ms-2">
+                  <%= errors.imageUrl %>
+               </small>
+               <% } %>
          </div>
+
          <div class=" mb-3">
             <label class="form-label">Label</label>
-            <select class="form-select" aria-label="Default select example" name="labelId">
+            <select class="form-select  <%= errors.labelId? 'is-invalid' : '' %>" aria-label="Default select example"
+               name="labelId">
                <option value="">-Select-</option>
                <% listLabels.forEach((label)=>{ %>
                   <option value="<%= label.id%>" <%=old?.labelId==label.id ? "selected" : "" %> >
@@ -56,10 +98,22 @@
                   </option>
                   <% }) %>
             </select>
+            <% if (errors.labelId) { %>
+               <small class="text-danger ms-2">
+                  <%= errors.labelId %>
+               </small>
+               <% } %>
          </div>
+
          <div class="mb-3">
             <label>Create date</label>
-            <input type="date" class="form-control" name="createdDate" value="<%= old?.createdDate || '' %>">
+            <input type="date" class="form-control <%= errors.createdDate ? 'is-invalid' : '' %>" name="createdDate"
+               value="<%= old?.createdDate || '' %>">
+            <% if (errors.createdDate) { %>
+               <small class="text-danger ms-2">
+                  <%= errors.createdDate %>
+               </small>
+               <% } %>
          </div>
 
          <button type="submit" class="btn btn-primary">Submit</button>

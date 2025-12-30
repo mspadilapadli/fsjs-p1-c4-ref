@@ -61,7 +61,9 @@
             </tr>
          </thead>
          <tbody>
-            <a href="/songs/add" class="btn btn-primary">Add Song</a>
+            <div class="my-3">
+               <a href="/songs/add" class="btn btn-primary">Add Song</a>
+            </div>
             <% data.forEach((song)=> {%>
 
                <tr>
@@ -82,8 +84,8 @@
                   </td>
                   <td>
                      <a href="/songs/<%= song.id %>" class="btn btn-success">Read</a>
-                     <a href="Edit" class="btn btn-warning">Edit</a>
-                     <a href="Delete" class="btn btn-danger">Delete</a>
+                     <a href="songs/<%= song.id %>/update" class="btn btn-warning">Edit</a>
+                     <a href="songs/<%= song.id %>/delete" class="btn btn-danger">Delete</a>
                   </td>
                </tr>
                <% }); %>
