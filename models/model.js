@@ -67,7 +67,7 @@ ORDER BY l.name ASC`;
             const errors = this.validation(payload);
             // console.log(errors);
             if (Object.keys(errors).length > 0)
-                throw { name: "ValidationError", errors };
+                throw { name: "ValidationError", errValidation: errors };
 
             const query = `insert into "Songs"("title",
             "bandName",
@@ -91,6 +91,41 @@ ORDER BY l.name ASC`;
         try {
             const song = this.getSongById(id);
             let query = `delete from "Songs" where "id" = ${id}`;
+            await pool.query(query);
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    static async updateSong(id, payload) {
+        try {
+            const {
+                title,
+                bandName,
+                duration,
+                genre,
+                createdDate,
+                lyric,
+                imageUrl,
+                labelId,
+            } = payload;
+            // console.log(payload);
+
+            const errors = this.validation(payload);
+            // console.log(errors);
+            if (Object.keys(errors).length > 0)
+                throw { name: "ValidationError", errValidation: errors };
+
+            const query = `update "Songs" set "title" = '${title}',
+            "bandName" = '${bandName}',
+            "duration" = '${duration}',
+            "genre" = '${genre}',
+            "createdDate" = '${createdDate}',
+            "lyric" = '${lyric}' ,
+            "imageUrl" = '${imageUrl}',
+            "labelId" = '${labelId}'    
+            where "id" = '${id}'`;
+            console.log(query);
             await pool.query(query);
         } catch (error) {
             throw error;
