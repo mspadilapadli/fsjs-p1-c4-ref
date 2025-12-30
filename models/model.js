@@ -62,7 +62,13 @@ ORDER BY l.name ASC`;
                 imageUrl,
                 labelId,
             } = payload;
-            console.log(payload);
+            // console.log(payload);
+
+            const errors = this.validation(payload);
+            // console.log(errors);
+            if (Object.keys(errors).length > 0)
+                throw { name: "ValidationError", errors };
+
             const query = `insert into "Songs"("title",
             "bandName",
             "duration",
@@ -71,8 +77,8 @@ ORDER BY l.name ASC`;
             "lyric",
             "imageUrl",
             "totalVote",
-            "labelId") 
-            values ('${title}', '${bandName}','${duration}', '${genre}','${createdDate}','${lyric}','${imageUrl}','0','${labelId}'
+            "labelId")
+            values ('${title}', '${bandName}', '${+duration}', '${genre}','${createdDate}','${lyric}','${imageUrl}','0','${labelId}'
             )`;
 
             await pool.query(query);
@@ -89,6 +95,83 @@ ORDER BY l.name ASC`;
         } catch (error) {
             throw error;
         }
+    }
+
+    static validation(payload) {
+        const errors = {};
+
+        const {
+            title,
+            bandName,
+            duration,
+            genre,
+            createdDate,
+            lyric,
+            imageUrl,
+            labelId,
+        } = payload;
+
+        // title
+        if (!title) {
+            errors.title = "Title is required";
+        } else if (title.length > 100) {
+            errors.title = "Title maximum character is 100";
+        }
+
+        // band name
+        if (!bandName) {
+            errors.bandName = "Band Name is required";
+        }
+
+        // duration
+        if (!duration) {
+            errors.duration = "Duration is required";
+        } else if (duration < 60) {
+            errors.duration = "Minimum duration is 60 seconds";
+        }
+
+        // genre
+        if (!genre) {
+            errors.genre = "Genre is required";
+        }
+
+        // lyric
+        if (!lyric) {
+            errors.lyric = "Lyric is required";
+        } else {
+            const words = lyric.trim().split(/\s+/);
+            if (words.length < 10) {
+                errors.lyric = "Minimum word in lyric is 10";
+            }
+        }
+
+        // image
+        if (!imageUrl) {
+            errors.imageUrl = "Image Url is required";
+        } else if (imageUrl.length > 50) {
+            errors.imageUrl = "Image Url name maximum character is 50";
+        }
+
+        // label
+        if (!labelId) {
+            errors.labelId = "Label is required";
+        }
+
+        // created date
+        if (!createdDate) {
+            errors.createdDate = "Create Date is required";
+        } else {
+            //handle maximun date
+            const inputDateObj = new Date(createdDate);
+            const today = new Date();
+            // today.setHours(0, 0, 0, 0);
+
+            if (inputDateObj > today) {
+                errors.createdDate = "Maximum created date is today";
+            }
+        }
+
+        return errors;
     }
 }
 
