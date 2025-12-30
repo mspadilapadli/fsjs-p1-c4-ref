@@ -5,8 +5,8 @@ const Controller = require("../controllers/controller");
 router.get("/", Controller.showSongs);
 
 // //add
-// router.get("/add", Controller.showFormAddSong);
-// router.post("/add", Controller.postSong);
+router.get("/add", Controller.showFormAddSong);
+router.post("/add", Controller.postSong);
 
 // //update
 // router.post("/:id/edit", Controller.postUpdateSong);

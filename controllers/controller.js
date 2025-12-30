@@ -39,5 +39,42 @@ class Controller {
             res.send(error);
         }
     }
+
+    static async showFormAddSong(req, res) {
+        try {
+            const listLabels = await Model.getLables();
+            res.render("formAddSong", { listLabels });
+        } catch (error) {
+            res.send(error);
+        }
+    }
+    static async postSong(req, res) {
+        try {
+            const {
+                title,
+                bandName,
+                duration,
+                genre,
+                lyric,
+                imageUrl,
+                labelId,
+                createdDate,
+            } = req.body;
+            const payload = {
+                title,
+                bandName,
+                duration,
+                genre,
+                lyric,
+                imageUrl,
+                labelId,
+                createdDate,
+            };
+            await Model.addSong(payload);
+            res.redirect("/songs");
+        } catch (error) {
+            res.send(error.message);
+        }
+    }
 }
 module.exports = Controller;

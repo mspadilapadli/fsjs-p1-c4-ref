@@ -50,6 +50,36 @@ ORDER BY l.name ASC`;
             throw error;
         }
     }
+    static async addSong(payload) {
+        try {
+            const {
+                title,
+                bandName,
+                duration,
+                genre,
+                createdDate,
+                lyric,
+                imageUrl,
+                labelId,
+            } = payload;
+            console.log(payload);
+            const query = `insert into "Songs"("title",
+            "bandName",
+            "duration",
+            "genre",
+            "createdDate",
+            "lyric",
+            "imageUrl",
+            "totalVote",
+            "labelId") 
+            values ('${title}', '${bandName}','${duration}', '${genre}','${createdDate}','${lyric}','${imageUrl}','0','${labelId}'
+            )`;
+
+            await pool.query(query);
+        } catch (error) {
+            throw error;
+        }
+    }
 }
 
 module.exports = Model;
