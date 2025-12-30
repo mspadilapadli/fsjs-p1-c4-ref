@@ -43,7 +43,7 @@ class Controller {
     static async showFormAddSong(req, res) {
         try {
             const listLabels = await Model.getLables();
-            res.render("formAddSong", { listLabels, old: {} });
+            res.render("formAddSong", { listLabels, old: {}, errors: {} });
         } catch (error) {
             res.send(error);
         }
@@ -74,12 +74,12 @@ class Controller {
             await Model.addSong(payload);
             // pr : add notice add data success
             res.redirect("/songs");
-        } catch (err) {
-            if (err.name === "ValidationError") {
+        } catch (error) {
+            if (error.name === "ValidationError") {
                 const listLabels = await Model.getLables();
-                console.log(err.errors);
+                console.log(error.errValidation);
                 return res.render(`formAddSong`, {
-                    errors: err.errors,
+                    errors: error.errValidation,
                     old: req.body,
                     listLabels,
                 });
@@ -96,6 +96,62 @@ class Controller {
             // pr : add notice del data success
             res.redirect("/songs");
         } catch (error) {
+            res.send(error);
+        }
+    }
+
+    static async showFormUpdateSong(req, res) {
+        try {
+            const { id } = req.params;
+            const song = await Model.getSongById(id);
+            song.createdDate = song.createdDate.toISOString().split("T")[0];
+            const listLabels = await Model.getLables();
+
+            res.render("formUpdateSong", {
+                listLabels,
+                old: song,
+                errors: {},
+            });
+        } catch (error) {
+            res.send(error);
+        }
+    }
+    static async postUpdateSong(req, res) {
+        try {
+            const { id } = req.params;
+            const {
+                title,
+                bandName,
+                duration,
+                genre,
+                lyric,
+                imageUrl,
+                labelId,
+                createdDate,
+            } = req.body;
+            const payload = {
+                title,
+                bandName,
+                duration,
+                genre,
+                lyric,
+                imageUrl,
+                labelId,
+                createdDate,
+            };
+
+            await Model.updateSong(id, payload);
+            // pr : add notice add data success
+            res.redirect("/songs");
+        } catch (error) {
+            if (error.name === "ValidationError") {
+                const listLabels = await Model.getLables();
+                return res.render(`formAddSong`, {
+                    errors: error.errValidation,
+                    old: req.body,
+                    listLabels,
+                });
+            }
             res.send(error);
         }
     }
