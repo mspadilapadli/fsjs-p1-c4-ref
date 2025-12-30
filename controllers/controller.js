@@ -43,11 +43,12 @@ class Controller {
     static async showFormAddSong(req, res) {
         try {
             const listLabels = await Model.getLables();
-            res.render("formAddSong", { listLabels });
+            res.render("formAddSong", { listLabels, old: {} });
         } catch (error) {
             res.send(error);
         }
     }
+
     static async postSong(req, res) {
         try {
             const {
@@ -73,8 +74,18 @@ class Controller {
             await Model.addSong(payload);
             // pr : add notice add data success
             res.redirect("/songs");
-        } catch (error) {
-            res.send(error.message);
+        } catch (err) {
+            if (err.name === "ValidationError") {
+                const listLabels = await Model.getLables();
+                console.log(err.errors);
+                return res.render(`formAddSong`, {
+                    errors: err.errors,
+                    old: req.body,
+                    listLabels,
+                });
+            }
+
+            res.send(err);
         }
     }
 
