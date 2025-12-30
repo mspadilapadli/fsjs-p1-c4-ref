@@ -9,8 +9,8 @@ router.get("/add", Controller.showFormAddSong);
 router.post("/add", Controller.postSong);
 
 // //update
-// router.post("/:id/edit", Controller.postUpdateSong);
-// router.get("/:id/edit", Controller.showFormUpdateSong);
+router.get("/:id/update", Controller.showFormUpdateSong);
+router.post("/:id/update", Controller.postUpdateSong);
 
 // //delete
 router.get("/:id/delete", Controller.deteleSong);
