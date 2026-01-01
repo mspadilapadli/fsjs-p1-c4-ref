@@ -125,7 +125,7 @@ ORDER BY l.name ASC`;
             "imageUrl" = '${imageUrl}',
             "labelId" = '${labelId}'    
             where "id" = '${id}'`;
-            console.log(query);
+
             await pool.query(query);
         } catch (error) {
             throw error;

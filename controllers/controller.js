@@ -40,15 +40,45 @@ class Controller {
         }
     }
 
-    static async showFormAddSong(req, res) {
+    //share form add & update
+
+    static async showOneFormAddOrUpdate(req, res) {
         try {
+            const { id } = req.params;
+            const isUpdate = Boolean(id);
             const listLabels = await Model.getLables();
-            //old = req.body or existing input from user
-            res.render("formAddSong", { listLabels, old: {}, errors: {} });
+
+            let old = {};
+            let action = "/songs/add";
+
+            if (id) {
+                const song = await Model.getSongById(id);
+                song.createdDate = song.createdDate.toISOString().split("T")[0];
+                old = song;
+                action = `/songs/${id}/update`;
+            }
+
+            res.render("oneFormAddUpdate", {
+                listLabels,
+                old,
+                errors: {},
+                action,
+                isUpdate,
+            });
         } catch (error) {
             res.send(error);
         }
     }
+
+    // static async showFormAddSong(req, res) {
+    //     try {
+    //         const listLabels = await Model.getLables();
+    //         //old = req.body or existing input from user
+    //         res.render("formAddSong", { listLabels, old: {}, errors: {} });
+    //     } catch (error) {
+    //         res.send(error);
+    //     }
+    // }
 
     static async postSong(req, res) {
         try {
@@ -78,14 +108,55 @@ class Controller {
         } catch (error) {
             if (error.name === "ValidationError") {
                 const listLabels = await Model.getLables();
-                return res.render(`formAddSong`, {
-                    errors: error.errValidation,
+                return res.render(`oneFormAddUpdate`, {
+                    errors: error.errValidation || {},
                     old: req.body,
                     listLabels,
+                    action: `/songs/add`,
+                    isUpdate: false,
                 });
             }
 
             res.send(err);
+        }
+    }
+
+    // static async showFormUpdateSong(req, res) {
+    //     try {
+    //         const { id } = req.params;
+    //         const song = await Model.getSongById(id);
+    //         song.createdDate = song.createdDate.toISOString().split("T")[0];
+    //         const listLabels = await Model.getLables();
+
+    //         res.render("formUpdateSong", {
+    //             listLabels,
+    //             old: song,
+    //             errors: {},
+    //         });
+    //     } catch (error) {
+    //         res.send(error);
+    //     }
+    // }
+    static async postUpdateSong(req, res) {
+        const { id } = req.params;
+        try {
+            const payload = { ...req.body };
+
+            await Model.updateSong(id, payload);
+            // pr : add notice add data success
+            res.redirect("/songs");
+        } catch (error) {
+            if (error.name === "ValidationError") {
+                const listLabels = await Model.getLables();
+                return res.render(`oneFormAddUpdate`, {
+                    errors: error.errValidation || {},
+                    old: req.body,
+                    listLabels,
+                    action: `/songs/${id}/update`,
+                    isUpdate: true,
+                });
+            }
+            res.send(error);
         }
     }
 
@@ -100,118 +171,62 @@ class Controller {
         }
     }
 
-    static async showFormUpdateSong(req, res) {
-        try {
-            const { id } = req.params;
-            const song = await Model.getSongById(id);
-            song.createdDate = song.createdDate.toISOString().split("T")[0];
-            const listLabels = await Model.getLables();
-
-            res.render("formUpdateSong", {
-                listLabels,
-                old: song,
-                errors: {},
-            });
-        } catch (error) {
-            res.send(error);
-        }
-    }
-    static async postUpdateSong(req, res) {
-        try {
-            const { id } = req.params;
-            const {
-                title,
-                bandName,
-                duration,
-                genre,
-                lyric,
-                imageUrl,
-                labelId,
-                createdDate,
-            } = req.body;
-            const payload = {
-                title,
-                bandName,
-                duration,
-                genre,
-                lyric,
-                imageUrl,
-                labelId,
-                createdDate,
-            };
-
-            await Model.updateSong(id, payload);
-            // pr : add notice add data success
-            res.redirect("/songs");
-        } catch (error) {
-            if (error.name === "ValidationError") {
-                const listLabels = await Model.getLables();
-                return res.render(`formAddSong`, {
-                    errors: error.errValidation,
-                    old: req.body,
-                    listLabels,
-                });
-            }
-            res.send(error);
-        }
-    }
-
     //* create add and update in one form ( 1 getform , 1 postForm)
-    static async showOneFormAddOrUpdate(req, res) {
-        try {
-            const { id } = req.params;
-            const isUpdate = Boolean(id);
-            const listLabels = await Model.getLables();
+    // static async showOneFormAddOrUpdate(req, res) {
+    //     try {
+    //         const { id } = req.params;
+    //         const isUpdate = Boolean(id);
+    //         const listLabels = await Model.getLables();
 
-            let old = {};
-            let action = "/songs/add";
+    //         let old = {};
+    //         let action = "/songs/add";
 
-            if (id) {
-                const song = await Model.getSongById(id);
-                song.createdDate = song.createdDate.toISOString().split("T")[0];
-                old = song;
-                action = `/songs/${id}/update`;
-            }
+    //         if (id) {
+    //             const song = await Model.getSongById(id);
+    //             song.createdDate = song.createdDate.toISOString().split("T")[0];
+    //             old = song;
+    //             action = `/songs/${id}/update`;
+    //         }
 
-            res.render("oneFormAddUpdate", {
-                listLabels,
-                old,
-                errors: {},
-                action,
-                isUpdate,
-            });
-        } catch (error) {
-            res.send(error);
-        }
-    }
-    static async submitOneFormAddOrUpdate(req, res) {
-        const { id } = req.params;
-        const action = id ? `/songs/${id}/update` : `/songs/add`;
-        const isUpdate = Boolean(id);
+    //         res.render("oneFormAddUpdate", {
+    //             listLabels,
+    //             old,
+    //             errors: {},
+    //             action,
+    //             isUpdate,
+    //         });
+    //     } catch (error) {
+    //         res.send(error);
+    //     }
+    // }
+    // static async submitOneFormAddOrUpdate(req, res) {
+    //     const { id } = req.params;
+    //     const action = id ? `/songs/${id}/update` : `/songs/add`;
+    //     const isUpdate = Boolean(id);
 
-        try {
-            const payload = { ...req.body };
+    //     try {
+    //         const payload = { ...req.body };
 
-            if (id) {
-                await Model.updateSong(id, payload);
-            } else {
-                await Model.addSong(payload);
-            }
-            // pr : add notice add data success
-            res.redirect("/songs");
-        } catch (error) {
-            if (error.name === "ValidationError") {
-                const listLabels = await Model.getLables();
-                return res.render(`oneFormAddUpdate`, {
-                    errors: error.errValidation || {},
-                    old: req.body,
-                    listLabels,
-                    action,
-                    isUpdate,
-                });
-            }
-            res.send(error);
-        }
-    }
+    //         if (id) {
+    //             await Model.updateSong(id, payload);
+    //         } else {
+    //             await Model.addSong(payload);
+    //         }
+    //         // pr : add notice add data success
+    //         res.redirect("/songs");
+    //     } catch (error) {
+    //         if (error.name === "ValidationError") {
+    //             const listLabels = await Model.getLables();
+    //             return res.render(`oneFormAddUpdate`, {
+    //                 errors: error.errValidation || {},
+    //                 old: req.body,
+    //                 listLabels,
+    //                 action,
+    //                 isUpdate,
+    //             });
+    //         }
+    //         res.send(error);
+    //     }
+    // }
 }
 module.exports = Controller;
