@@ -43,6 +43,7 @@ class Controller {
     static async showFormAddSong(req, res) {
         try {
             const listLabels = await Model.getLables();
+            //old = req.body or existing input from user
             res.render("formAddSong", { listLabels, old: {}, errors: {} });
         } catch (error) {
             res.send(error);
@@ -77,7 +78,6 @@ class Controller {
         } catch (error) {
             if (error.name === "ValidationError") {
                 const listLabels = await Model.getLables();
-                console.log(error.errValidation);
                 return res.render(`formAddSong`, {
                     errors: error.errValidation,
                     old: req.body,
@@ -150,6 +150,64 @@ class Controller {
                     errors: error.errValidation,
                     old: req.body,
                     listLabels,
+                });
+            }
+            res.send(error);
+        }
+    }
+
+    //* create add and update in one form ( 1 getform , 1 postForm)
+    static async showOneFormAddOrUpdate(req, res) {
+        try {
+            const { id } = req.params;
+            const isUpdate = Boolean(id);
+            const listLabels = await Model.getLables();
+
+            let old = {};
+            let action = "/songs/add";
+
+            if (id) {
+                const song = await Model.getSongById(id);
+                song.createdDate = song.createdDate.toISOString().split("T")[0];
+                old = song;
+                action = `/songs/${id}/update`;
+            }
+
+            res.render("oneFormAddUpdate", {
+                listLabels,
+                old,
+                errors: {},
+                action,
+                isUpdate,
+            });
+        } catch (error) {
+            res.send(error);
+        }
+    }
+    static async submitOneFormAddOrUpdate(req, res) {
+        const { id } = req.params;
+        const action = id ? `/songs/${id}/update` : `/songs/add`;
+        const isUpdate = Boolean(id);
+
+        try {
+            const payload = { ...req.body };
+
+            if (id) {
+                await Model.updateSong(id, payload);
+            } else {
+                await Model.addSong(payload);
+            }
+            // pr : add notice add data success
+            res.redirect("/songs");
+        } catch (error) {
+            if (error.name === "ValidationError") {
+                const listLabels = await Model.getLables();
+                return res.render(`oneFormAddUpdate`, {
+                    errors: error.errValidation || {},
+                    old: req.body,
+                    listLabels,
+                    action,
+                    isUpdate,
                 });
             }
             res.send(error);
