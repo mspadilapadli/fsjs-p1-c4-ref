@@ -6,18 +6,20 @@ router.get("/", Controller.showSongs);
 
 //add
 // router.get("/add", Controller.showFormAddSong);
-// router.post("/add", Controller.postSong);
+router.get("/add", Controller.showOneFormAddOrUpdate); //shared form
+router.post("/add", Controller.postSong);
 
 //* create add and update in one form ( 1 getform , 1 postForm)
-router.get("/add", Controller.showOneFormAddOrUpdate);
-router.post("/add", Controller.submitOneFormAddOrUpdate);
+// router.get("/add", Controller.showOneFormAddOrUpdate);
+// router.post("/add", Controller.submitOneFormAddOrUpdate);
 
-router.get("/:id/update", Controller.showOneFormAddOrUpdate);
-router.post("/:id/update", Controller.submitOneFormAddOrUpdate);
+// router.get("/:id/update", Controller.showOneFormAddOrUpdate);
+// router.post("/:id/update", Controller.submitOneFormAddOrUpdate);
 
 //update
 // router.get("/:id/update", Controller.showFormUpdateSong);
-// router.post("/:id/update", Controller.postUpdateSong);
+router.get("/:id/update", Controller.showOneFormAddOrUpdate); //shared form
+router.post("/:id/update", Controller.postUpdateSong);
 
 //delete
 router.get("/:id/delete", Controller.deteleSong);
