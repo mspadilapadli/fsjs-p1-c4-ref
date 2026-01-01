@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <lyric>One Form Add & Update</lyric>
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+</head>
+
+<body>
+   <div class="container">
+
+      <form action="<%=action%>" method="post">
+
+         <div class="mb-3">
+            <label>
+               Title
+            </label>
+            <input type="text" class="form-control <%= errors.title ? 'is-invalid' : '' %>" name="title"
+               value="<%= old?.title || '' %>">
+            <% if (errors.title) { %>
+               <small class="text-danger ms-2">
+                  <%= errors.title %>
+               </small>
+               <% } %>
+         </div>
+
+         <div class="mb-3">
+            <label>Band Name</label>
+            <input type="text" class="form-control <%= errors.bandName ? 'is-invalid' : '' %>" name="bandName"
+               value="<%= old?.bandName || '' %>">
+            <% if (errors.bandName) { %>
+               <small class="text-danger ms-2">
+                  <%= errors.bandName %>
+               </small>
+               <% } %>
+         </div>
+
+         <div class=" mb-3">
+            <label>Duration</label>
+            <input type="number" class="form-control <%= errors.duration ? 'is-invalid' : '' %>" name="duration"
+               placeholder="0" value="<%= old?.duration ?? '' %>">
+            <% if (errors.duration) { %>
+               <small class="text-danger ms-2">
+                  <%= errors.duration %>
+               </small>
+               <% } %>
+         </div>
+
+         <div class=" mb-3">
+            <label>Genre</label>
+            <select class="form-control <%= errors.genre ? 'is-invalid' : '' %>" name="genre">
+               <option value="">--Select--</option>
+               <option value="Rock" <%=old?.genre=="Rock" ? "selected" :"" %> >Rock</option>
+               <option value="Pop" <%=old?.genre=="Pop" ? "selected" :"" %>>Pop</option>
+               <option value="Dangdut" <%=old?.genre=="Dangdut" ? "selected" :"" %>>Dangdut</option>
+               <option value="Jazz" <%=old?.genre=="Jazz" ? "selected" :"" %>>Jazz</option>
+               <option value="Other" <%=old?.genre=="Other" ? "selected" :"" %>>Other</option>
+            </select>
+            <% if (errors.genre) { %>
+               <small class="text-danger ms-2">
+                  <%= errors.genre %>
+               </small>
+               <% } %>
+         </div>
+
+         <div class="mb-3">
+            <label>Lyric</label>
+            <input type="text" class="form-control <%= errors.lyric ? 'is-invalid' : '' %>" name="lyric"
+               value="<%= old?.lyric || '' %>">
+            <% if (errors.lyric) { %>
+               <small class="text-danger ms-2">
+                  <%= errors.lyric %>
+               </small>
+               <% } %>
+         </div>
+
+         <div class=" mb-3">
+            <label>Image Url</label>
+            <input type="text" class="form-control <%= errors.imageUrl ? 'is-invalid' : '' %>" name="imageUrl"
+               value="<%= old?.imageUrl || '' %>">
+            <% if (errors.imageUrl) { %>
+               <small class="text-danger ms-2">
+                  <%= errors.imageUrl %>
+               </small>
+               <% } %>
+         </div>
+
+         <div class=" mb-3">
+            <label class="form-label">Label</label>
+            <select class="form-select  <%= errors.labelId? 'is-invalid' : '' %>" aria-label="Default select example"
+               name="labelId">
+               <option value="">-Select-</option>
+               <% listLabels.forEach((label)=>{ %>
+                  <option value="<%= label.id%>" <%=old?.labelId==label.id ? "selected" : "" %> >
+                     <%=label.name %>
+                  </option>
+                  <% }) %>
+            </select>
+            <% if (errors.labelId) { %>
+               <small class="text-danger ms-2">
+                  <%= errors.labelId %>
+               </small>
+               <% } %>
+         </div>
+
+         <div class="mb-3">
+            <label>Create date</label>
+            <input type="date" class="form-control <%= errors.createdDate ? 'is-invalid' : '' %>" name="createdDate"
+               value="<%= old?.createdDate || '' %>">
+            <% if (errors.createdDate) { %>
+               <small class="text-danger ms-2">
+                  <%= errors.createdDate %>
+               </small>
+               <% } %>
+         </div>
+
+         <button type="submit" class="btn btn-primary">
+            <%=isUpdate ? "Update" : "Add" %>
+         </button>
+      </form>
+
+   </div>
+
+
+
+   </tbody>
+   </table>
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+      crossorigin="anonymous"></script>
+</body>
+
+</html>

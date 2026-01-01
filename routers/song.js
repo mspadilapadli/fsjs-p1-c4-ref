@@ -4,21 +4,28 @@ const Controller = require("../controllers/controller");
 
 router.get("/", Controller.showSongs);
 
-// //add
-router.get("/add", Controller.showFormAddSong);
-router.post("/add", Controller.postSong);
+//add
+// router.get("/add", Controller.showFormAddSong);
+// router.post("/add", Controller.postSong);
 
-// //update
-router.get("/:id/update", Controller.showFormUpdateSong);
-router.post("/:id/update", Controller.postUpdateSong);
+//* create add and update in one form ( 1 getform , 1 postForm)
+router.get("/add", Controller.showOneFormAddOrUpdate);
+router.post("/add", Controller.submitOneFormAddOrUpdate);
 
-// //delete
+router.get("/:id/update", Controller.showOneFormAddOrUpdate);
+router.post("/:id/update", Controller.submitOneFormAddOrUpdate);
+
+//update
+// router.get("/:id/update", Controller.showFormUpdateSong);
+// router.post("/:id/update", Controller.postUpdateSong);
+
+//delete
 router.get("/:id/delete", Controller.deteleSong);
 
-// // vote song
+// vote song
 // router.get("/:id/vote", Controller.vote);
 
-// //show single song
+//show single song
 router.get("/:id", Controller.showSongById);
 
 module.exports = router;
