@@ -8,6 +8,7 @@ class Label {
         this.city = city;
     }
 
+    //formate date in FE
     get formatDate() {
         const date = new Date(this.since);
         const options = {
@@ -65,6 +66,12 @@ class SongDetail extends Song {
         this.lyric = lyric;
         this.imageUrl = imageUrl;
         this.labelId = labelId;
+    }
+
+    get formatDateymd() {
+        if (!this.createdDate) return "";
+        const date = new Date(this.createdDate);
+        return isNaN(date) ? "" : date.toISOString().split("T")[0];
     }
 }
 
