@@ -33,6 +33,11 @@ ORDER BY l.name ASC`;
     static async getSongs(q) {
         try {
             let query = `select * from "Songs" `;
+            if (q) {
+                query += ` where "title" ilike '%${q}%'`;
+            }
+            query += `order by "totalVote" asc`;
+            console.log(query);
             const data = await pool.query(query);
             return Factory.instanceSongs(data.rows);
         } catch (error) {

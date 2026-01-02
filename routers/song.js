@@ -25,7 +25,7 @@ router.post("/:id/update", Controller.postUpdateSong);
 router.get("/:id/delete", Controller.deteleSong);
 
 // vote song
-// router.get("/:id/vote", Controller.vote);
+router.get("/:id/vote", Controller.vote);
 
 //show single song
 router.get("/:id", Controller.showSongById);

@@ -5,6 +5,7 @@ class Controller {
     //* ==Labels==
     static async showLabels(req, res) {
         try {
+           
             let data = await Model.getLables(q);
             res.render("labels", { data, searchAction: "/labels" }); // q to UX search
         } catch (error) {
@@ -23,6 +24,7 @@ class Controller {
 
     static async showSongs(req, res) {
         try {
+            const { q } = req.query;
             const data = await Model.getSongs(q);
             res.render("songs", { data, searchAction: "/songs" });
         } catch (error) {
