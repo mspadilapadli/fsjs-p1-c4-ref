@@ -10,58 +10,60 @@
 </head>
 
 <body>
-   <h1>Detail Label</h1>
+   <%-include("_navbar")%>
+      <div class="container">
+         <h4>Detail Label</h4>
 
+         <table class="table  table-striped">
+            <thead>
+               <tr>
+                  <th scope="col">id</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Since</th>
+                  <th scope="col">City</th>
+                  <th scope="col">AVG</th>
+                  <th scope="col">MIN</th>
+                  <th scope="col">MAX</th>
+               </tr>
+            </thead>
+            <tbody>
 
-   <table class="table  table-striped">
-      <thead>
-         <tr>
-            <th scope="col">id</th>
-            <th scope="col">Name</th>
-            <th scope="col">Since</th>
-            <th scope="col">City</th>
-            <th scope="col">AVG</th>
-            <th scope="col">MIN</th>
-            <th scope="col">MAX</th>
-         </tr>
-      </thead>
-      <tbody>
+               <% data.forEach((label)=> {%>
 
-         <% data.forEach((label)=> {%>
+                  <tr>
+                     <th scope="row">
+                        <%=label.id%>
+                     </th>
+                     <td>
+                        <%= label.name %>
+                     </td>
+                     <td>
+                        <%= label.formatDate%>
+                     </td>
+                     <td>
+                        <%= label.city %>
+                     </td>
+                     <td>
+                        <%= label.averageDuration %>
+                     </td>
+                     <td>
+                        <%= label.minDuration %>
+                     </td>
+                     <td>
+                        <%= label.maxDuration %>
+                     </td>
+                  </tr>
+                  <% }); %>
 
-            <tr>
-               <th scope="row">
-                  <%=label.id%>
-               </th>
-               <td>
-                  <%= label.name %>
-               </td>
-               <td>
-                  <%= label.formatDate%>
-               </td>
-               <td>
-                  <%= label.city %>
-               </td>
-               <td>
-                  <%= label.averageDuration %>
-               </td>
-               <td>
-                  <%= label.minDuration %>
-               </td>
-               <td>
-                  <%= label.maxDuration %>
-               </td>
-            </tr>
-            <% }); %>
+            </tbody>
+         </table>
 
-      </tbody>
-   </table>
+         <a class="btn btn-outline-dark" href="/labels">Back</a>
+      </div>
 
-   <a class="btn btn-outline-dark" href="/labels">Back</a>
-
-   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-      crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+         crossorigin="anonymous"></script>
 </body>
 
 </html>
