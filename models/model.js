@@ -4,6 +4,11 @@ class Model {
     static async getLables(q) {
         try {
             let query = `select * from "Labels" `;
+            if (q) {
+                query += ` where "name" ilike '%${q}%'`;
+            }
+            query += `order by "name" asc`;
+
             const data = await pool.query(query);
             return Factory.instanceLabels(data.rows);
         } catch (error) {

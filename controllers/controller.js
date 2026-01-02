@@ -5,7 +5,7 @@ class Controller {
     //* ==Labels==
     static async showLabels(req, res) {
         try {
-           
+            const { q } = req.query;
             let data = await Model.getLables(q);
             res.render("labels", { data, searchAction: "/labels" }); // q to UX search
         } catch (error) {
