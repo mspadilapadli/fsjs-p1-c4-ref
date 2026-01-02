@@ -5,8 +5,8 @@ class Controller {
     //* ==Labels==
     static async showLabels(req, res) {
         try {
-            let data = await Model.getLables();
-            res.render("labels", { data });
+            let data = await Model.getLables(q);
+            res.render("labels", { data, searchAction: "/labels" }); // q to UX search
         } catch (error) {
             res.send(error);
         }
@@ -23,8 +23,8 @@ class Controller {
 
     static async showSongs(req, res) {
         try {
-            const data = await Model.getSongs();
-            res.render("songs", { data });
+            const data = await Model.getSongs(q);
+            res.render("songs", { data, searchAction: "/songs" });
         } catch (error) {
             console.log(error);
         }
@@ -228,5 +228,15 @@ class Controller {
     //         res.send(error);
     //     }
     // }
+
+    static async vote(req, res) {
+        try {
+            const { id } = req.params;
+            const data = await Model.voteSong(+id);
+            res.redirect(`/songs/${id}`);
+        } catch (error) {
+            res.send(error);
+        }
+    }
 }
 module.exports = Controller;

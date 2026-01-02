@@ -1,9 +1,9 @@
 const pool = require("../config");
 const Factory = require("./class");
 class Model {
-    static async getLables() {
+    static async getLables(q) {
         try {
-            const query = `select * from "Labels" order by "name" asc`;
+            let query = `select * from "Labels" `;
             const data = await pool.query(query);
             return Factory.instanceLabels(data.rows);
         } catch (error) {
@@ -30,9 +30,9 @@ ORDER BY l.name ASC`;
         }
     }
 
-    static async getSongs() {
+    static async getSongs(q) {
         try {
-            const query = `select * from "Songs" `;
+            let query = `select * from "Songs" `;
             const data = await pool.query(query);
             return Factory.instanceSongs(data.rows);
         } catch (error) {
@@ -126,6 +126,15 @@ ORDER BY l.name ASC`;
             "labelId" = '${labelId}'    
             where "id" = '${id}'`;
 
+            await pool.query(query);
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    static async voteSong(id) {
+        try {
+            let query = `update "Songs" SET "totalVote"  = "totalVote" + 1 WHERE "id" = ${id}`;
             await pool.query(query);
         } catch (error) {
             throw error;
