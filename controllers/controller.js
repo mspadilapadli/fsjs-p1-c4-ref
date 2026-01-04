@@ -52,7 +52,6 @@ class Controller {
 
             let old = {};
             let action = "/songs/add";
-
             if (id) {
                 const song = await Model.getSongById(id);
                 song.createdDate = song.createdDate.toISOString().split("T")[0];
@@ -66,6 +65,7 @@ class Controller {
                 errors: {},
                 action,
                 isUpdate,
+                searchAction: "",
             });
         } catch (error) {
             res.send(error);
@@ -116,6 +116,7 @@ class Controller {
                     listLabels,
                     action: `/songs/add`,
                     isUpdate: false,
+                    searchAction: "",
                 });
             }
 
@@ -156,6 +157,7 @@ class Controller {
                     listLabels,
                     action: `/songs/${id}/update`,
                     isUpdate: true,
+                    searchAction: "",
                 });
             }
             res.send(error);
